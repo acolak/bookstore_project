@@ -20,8 +20,16 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(BookAlreadyExistException.class)
 	public ResponseEntity<ErrorBody> handleBookAlreadyExistException(BookAlreadyExistException exception) {
 		HttpStatus responseStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-		ErrorBody errorBody = new ErrorBody(exception.getErrorCode(), "Book Already Exist!");
-		log.error(exception.getErrorCode() + " Book Already Exist!");
+		ErrorBody errorBody = new ErrorBody(exception.getErrorCode(), exception.getErrorMessage());
+		log.error(exception.getErrorCode() + "-" + exception.getErrorMessage());
+		return new ResponseEntity<>(errorBody, responseStatus);
+	}
+
+	@ExceptionHandler(CustomerServiceException.class)
+	public ResponseEntity<ErrorBody> handleCustomerServiceException(CustomerServiceException exception) {
+		HttpStatus responseStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		ErrorBody errorBody = new ErrorBody(exception.getErrorCode(), exception.getErrorMessage());
+		log.error(exception.getErrorCode() + "-" + exception.getErrorMessage());
 		return new ResponseEntity<>(errorBody, responseStatus);
 	}
 

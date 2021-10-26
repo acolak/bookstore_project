@@ -15,5 +15,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class BookResponseDTO extends BaseDTO {
 
-	private String id;
+	private String name;
+	private String author;
+	private Double price;
+	private Long stock;
 }

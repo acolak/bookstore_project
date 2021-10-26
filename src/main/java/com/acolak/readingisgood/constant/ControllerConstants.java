@@ -12,4 +12,9 @@ public class ControllerConstants {
 	public static final String BOOK_URL = "/book";
 
 
+	public static final String ORDER_URL = "/order";
+
+
+	public static final String STATISTICS_URL = "/statistics";
+
 }

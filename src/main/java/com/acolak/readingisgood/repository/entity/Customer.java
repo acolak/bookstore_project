@@ -1,9 +1,11 @@
 package com.acolak.readingisgood.repository.entity;
 
+import lombok.Builder;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.LocalDateTime;
 
@@ -12,9 +14,10 @@ import java.time.LocalDateTime;
  **/
 @Data
 @Document
+@Builder
 public class Customer {
 
-	@Id
+	@MongoId
 	private String customerId;
 	private String firstName;
 	private String lastName;
@@ -22,6 +25,9 @@ public class Customer {
 	@Indexed(unique = true)
 	private String email;
 	private String phone;
-	private LocalDateTime createDate;
+	private String address;
+
+	@Builder.Default
+	private LocalDateTime createDate = LocalDateTime.now();
 
 }
