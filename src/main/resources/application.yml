@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      authentication-database: admin
+      username: getir
+      password: p_getir
+      database: getir-bookstore
+      port: 27017
+      host: localhost
+      #auto-index-creation: true
