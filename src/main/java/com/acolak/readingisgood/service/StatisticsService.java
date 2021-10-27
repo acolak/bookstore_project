@@ -22,18 +22,18 @@ import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 
 @Service
 @Slf4j
-public class StaticsService {
+public class StatisticsService {
 
 	private OrderRepository orderRepository;
 	private MongoTemplate mongoTemplate;
 
-	public StaticsService(OrderRepository orderRepository, MongoTemplate mongoTemplate) {
+	public StatisticsService(OrderRepository orderRepository, MongoTemplate mongoTemplate) {
 		this.orderRepository = orderRepository;
 		this.mongoTemplate = mongoTemplate;
 	}
 
 	public List<OrderStatisticsDTO> getCustomerMonthlyOrders(String customerId) {
-		List<OrderStatisticsDTO> orderStats = orderRepository.monthlyStats().getMappedResults();
+		List<OrderStatisticsDTO> orderStats = orderRepository.orderStatsByMonthly().getMappedResults();
 
 		List<MonthDTO> orderMonthsDtoList = groupOrderMonths();
 
