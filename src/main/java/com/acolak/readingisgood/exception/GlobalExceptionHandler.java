@@ -42,6 +42,14 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(errorBody, responseStatus);
 	}
 
+	@ExceptionHandler(OrderServiceException.class)
+	public ResponseEntity<ErrorBody> handleCustomerServiceException(OrderServiceException exception) {
+		HttpStatus responseStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		ErrorBody errorBody = new ErrorBody(exception.getErrorCode(), exception.getErrorMessage());
+		log.error(exception.getErrorCode() + "-" + exception.getErrorMessage());
+		return new ResponseEntity<>(errorBody, responseStatus);
+	}
+
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorBody> handleGeneralException(Exception exception) {
 		HttpStatus responseStatus = HttpStatus.INTERNAL_SERVER_ERROR;
