@@ -40,6 +40,9 @@ public class OrderService {
 
 	public List<Order> getAllOrdersByCustomerId(String customerId, Integer pageNo, Integer pageSize, String sortBy) {
 
+		//to check customer is valid!
+		customerService.getCustomerById(customerId);
+
 		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
 		Page<Order> orderWithPaged = orderRepository.findAllByCustomerId(customerId, paging);
