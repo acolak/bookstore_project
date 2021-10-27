@@ -3,6 +3,7 @@ package com.acolak.readingisgood.controller;
 import com.acolak.readingisgood.constant.ControllerConstants;
 import com.acolak.readingisgood.dto.customer.CustomerRequestDTO;
 import com.acolak.readingisgood.dto.customer.CustomerResponseDTO;
+import com.acolak.readingisgood.repository.entity.Customer;
 import com.acolak.readingisgood.repository.entity.Order;
 import com.acolak.readingisgood.service.CustomerService;
 import com.acolak.readingisgood.service.OrderService;
@@ -29,9 +30,9 @@ public class CustomerController {
 	@PostMapping(ControllerConstants.REGISTER_URL)
 	public ResponseEntity<?> registerNewCustomer(@RequestBody CustomerRequestDTO requestDTO) {
 
-		CustomerResponseDTO responseDTO = customerService.addCustomer(requestDTO);
+		Customer customer = customerService.addCustomer(requestDTO);
 
-		return ResponseEntity.ok(responseDTO);
+		return ResponseEntity.ok(customerService.convertToCustomerResponseDTO(customer));
 
 	}
 

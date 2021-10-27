@@ -25,7 +25,7 @@ public class CustomerService {
 		this.customerRepository = customerRepository;
 	}
 
-	public CustomerResponseDTO addCustomer(CustomerRequestDTO requestDTO) {
+	public Customer addCustomer(CustomerRequestDTO requestDTO) {
 
 		Optional<Customer> customerRecord = customerRepository.findCustomerByEmail(requestDTO.getEmail());
 
@@ -34,7 +34,7 @@ public class CustomerService {
 		} else {
 			Customer customer = buildCustomerEntity(requestDTO);
 			customerRepository.insert(customer);
-			return convertToCustomerResponseDTO(customer);
+			return customer;
 		}
 	}
 

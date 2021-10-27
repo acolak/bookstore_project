@@ -1,9 +1,7 @@
 package com.acolak.readingisgood.dto.customer;
 
 import com.acolak.readingisgood.dto.BaseDTO;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 /**
  * @author AhmetColak date 27.10.2021 Copyright © 2021.
@@ -11,6 +9,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper=false)
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CustomerResponseDTO extends BaseDTO {
 
 	private String firstName;

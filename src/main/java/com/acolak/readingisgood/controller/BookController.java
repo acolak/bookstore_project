@@ -3,6 +3,7 @@ package com.acolak.readingisgood.controller;
 import com.acolak.readingisgood.constant.ControllerConstants;
 import com.acolak.readingisgood.dto.book.BookRequestDTO;
 import com.acolak.readingisgood.dto.book.BookResponseDTO;
+import com.acolak.readingisgood.repository.entity.Book;
 import com.acolak.readingisgood.service.BookService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +29,8 @@ public class BookController {
 
 	@PutMapping("/update")
 	public ResponseEntity<?> updateBook(@RequestBody BookRequestDTO requestDTO) {
-		BookResponseDTO responseDTO = bookService.updateBookStock(requestDTO);
-		return ResponseEntity.ok(responseDTO);
+		Book book = bookService.updateBookStock(requestDTO);
+		return ResponseEntity.ok(bookService.convertToBookResponseDTO(book));
 	}
 
 }

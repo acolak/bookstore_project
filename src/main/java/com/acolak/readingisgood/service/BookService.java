@@ -21,7 +21,6 @@ public class BookService {
 
 	private BookRepository bookRepository;
 
-
 	public BookService(BookRepository bookRepository) {
 		this.bookRepository = bookRepository;
 	}
@@ -53,7 +52,7 @@ public class BookService {
 
 
 	@Transactional
-	public BookResponseDTO updateBookStock(BookRequestDTO requestDTO) {
+	public Book updateBookStock(BookRequestDTO requestDTO) {
 
 		Optional<Book> bookRecord = bookRepository.findBookByName(requestDTO.getName());
 
@@ -62,8 +61,8 @@ public class BookService {
 			book.setUpdatedDate(LocalDateTime.now());
 			book.setStock(requestDTO.getStock());
 			bookRepository.save(book);
-			log.info("Book stock updated: " + book);
-			return convertToBookResponseDTO(book);
+			log.info("Book stock updated:  " + book);
+			return book;
 
 		} else {
 			throw new BookServiceException(602, "Book Not Found!");

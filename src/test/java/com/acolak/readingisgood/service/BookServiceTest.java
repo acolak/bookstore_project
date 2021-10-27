@@ -1,6 +1,7 @@
 package com.acolak.readingisgood.service;
 
 import com.acolak.readingisgood.dto.book.BookRequestDTO;
+import com.acolak.readingisgood.exception.BookServiceException;
 import com.acolak.readingisgood.repository.BookRepository;
 import com.acolak.readingisgood.repository.entity.Book;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -25,7 +27,7 @@ public class BookServiceTest {
 	@InjectMocks
 	private BookService bookService;
 
-	@Spy
+	@Mock
 	private BookRepository bookRepository;
 
 
@@ -42,11 +44,80 @@ public class BookServiceTest {
 	public void addNewBookWhenBookAlreadyExistUnitTest() {
 
 		BookRequestDTO bookRequestDTO = new BookRequestDTO();
+		bookRequestDTO.setName("Book1");
+
 		Book book = new Book();
 		book.setName("Book1");
-		when(bookRepository.findBookByName(anyString())).thenReturn(Optional.of(book));
-		bookService.addNewBook(bookRequestDTO);
-		verify(bookRepository).insert(any(Book.class));
+
+		lenient().when(bookRepository.findBookByName(anyString())).thenReturn(Optional.of(book));
+
+		BookServiceException thrown = assertThrows(
+				BookServiceException.class,
+				() -> bookService.addNewBook(bookRequestDTO));
+
+		assertTrue(thrown.getErrorMessage().equalsIgnoreCase("Book Already Exist!"));
+	}
+
+	@Test
+	public void updateBookStockUnitTest() {
+		Book book = new Book();
+		book.setName("Book1");
+		lenient().when(bookRepository.findBookByName(anyString())).thenReturn(Optional.of(book));
+
+		BookRequestDTO bookRequestDTO = new BookRequestDTO();
+		bookRequestDTO.setName("Book1");
+		bookRequestDTO.setStock(3L);
+		assertNotNull(bookService.updateBookStock(bookRequestDTO));
+
+		verify(bookRepository).save(book);
+	}
+
+	@Test
+	public void updateBookStockUnitTestWhenNotFoundBook() {
+		lenient().when(bookRepository.findBookByName(anyString())).thenReturn(Optional.empty());
+
+		BookRequestDTO bookRequestDTO = new BookRequestDTO();
+		bookRequestDTO.setName("Book1");
+		bookRequestDTO.setStock(3L);
+
+		BookServiceException thrown = assertThrows(
+				BookServiceException.class,
+				() -> bookService.updateBookStock(bookRequestDTO));
+
+		assertTrue(thrown.getErrorMessage().equalsIgnoreCase("Book Not Found!"));
+
+	}
+
+	@Test
+	public void updateBookStockByValueUnitTest() {
+		Book book = new Book();
+		book.setName("Book1");
+		book.setStock(5L);
+		Book returnBook = bookService.updateBookStockByValue(book, 2L);
+		assertTrue(returnBook.getStock().equals(2L));
+		verify(bookRepository).save(book);
+	}
+
+	@Test
+	public void getBookByIdUnitTestWhenNotFoundBook() {
+		lenient().when(bookRepository.findBookByName(anyString())).thenReturn(Optional.empty());
+
+		BookServiceException thrown = assertThrows(
+				BookServiceException.class,
+				() -> bookService.getBookById(anyString()));
+
+		assertTrue(thrown.getErrorMessage().equalsIgnoreCase("Book Not Found!"));
+
+	}
+
+
+	@Test
+	public void getBookByIdUnitTest() {
+		Book book = new Book();
+		book.setName("Book1");
+	    when(bookRepository.findById(anyString())).thenReturn(Optional.of(book));
+
+		assertNotNull(bookService.getBookById(book.getName()));
 	}
 
 }

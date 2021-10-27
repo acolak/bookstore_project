@@ -50,7 +50,7 @@ public class OrderController {
 												 ){
 		List<Order> ordersByInterval = orderService.getOrdersByDateInterval(startDate, endDate);
 
-		return ResponseEntity.ok(orderService.convertOrdersToResponsDTO(ordersByInterval));
+		return ResponseEntity.ok(orderService.convertOrdersToResponseDTO(ordersByInterval));
 	}
 
 }

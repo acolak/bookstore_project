@@ -123,7 +123,7 @@ public class OrderService {
 		}
 	}
 
-	public OrderResponseDTO convertOrdersToResponsDTO(List<Order> ordersByInterval) {
+	public OrderResponseDTO convertOrdersToResponseDTO(List<Order> ordersByInterval) {
 		OrderResponseDTO responseDTO = new OrderResponseDTO();
 		responseDTO.setOrderList(ordersByInterval.stream().map(order -> convertToOrderDTO(order)).collect(Collectors.toList()));
 		return responseDTO;
