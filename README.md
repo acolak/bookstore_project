@@ -28,7 +28,7 @@ This project consist of simple BookStore project that have below features:
 
 first clone or download project then
 
-`cd ReadingIsGood`
+`cd bookstore_project-main`
 
 ### 1.2 How to Run
 Run **runProject.sh** file in root directory
@@ -41,7 +41,7 @@ Run **runProject.sh** file in root directory
 
 Run tests
 ```
-$ cd ReadingIsGood
+$ cd bookstore_project-main
 $ mvn test
 ```
 
