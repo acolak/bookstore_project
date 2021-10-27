@@ -1,5 +1,6 @@
 package com.acolak.readingisgood.dto.statistics;
 
+import com.acolak.readingisgood.dto.BaseResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,8 +15,8 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @Data
-public class StatisticsResponseDTO {
+public class StatisticsResponseDTO extends BaseResponseDTO {
 
-	List<MonthDTO> monthList;
+	List<OrderStatisticsDTO> orderStatisticsDTOList;
 
 }

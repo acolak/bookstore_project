@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class MonthDTO {
 
-	private String totalOrderCount;
-	private String totalBookCount;
-	private String totalPurchasedAmount;
+	public int month;
+	public int orderCount;
+
 }

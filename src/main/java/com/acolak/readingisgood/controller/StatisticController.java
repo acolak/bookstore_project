@@ -1,7 +1,8 @@
 package com.acolak.readingisgood.controller;
 
 import com.acolak.readingisgood.constant.ControllerConstants;
-import com.acolak.readingisgood.repository.entity.Order;
+import com.acolak.readingisgood.dto.statistics.OrderStatisticsDTO;
+import com.acolak.readingisgood.dto.statistics.StatisticsResponseDTO;
 import com.acolak.readingisgood.service.StaticsService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,9 +28,11 @@ public class StatisticController {
 
 	@GetMapping("/customer-monthly-orders/{customerId}")
 	public ResponseEntity<?> listCustomerMonthlyOrders(@PathVariable String customerId){
-		List<Order> ordersByInterval = staticsService.getCustomerMonthlyOrders(customerId);
+		List<OrderStatisticsDTO> orderStatisticsDTOS = staticsService.getCustomerMonthlyOrders(customerId);
 
-		return ResponseEntity.ok(staticsService.convertOrdersToResponsDTO(ordersByInterval));
+		StatisticsResponseDTO responseDTO = new StatisticsResponseDTO();
+		responseDTO.setOrderStatisticsDTOList(orderStatisticsDTOS);
+		return ResponseEntity.ok(responseDTO);
 	}
 
 }

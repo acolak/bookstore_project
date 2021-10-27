@@ -42,4 +42,12 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(errorBody, responseStatus);
 	}
 
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<ErrorBody> handleGeneralException(Exception exception) {
+		HttpStatus responseStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		ErrorBody errorBody = new ErrorBody(500, "Unexcepted Error!");
+		log.error(exception.getMessage() + " trace : "+ exception.getStackTrace().toString());
+		return new ResponseEntity<>(errorBody, responseStatus);
+	}
+
 }

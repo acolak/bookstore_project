@@ -1,12 +1,20 @@
 package com.acolak.readingisgood.service;
 
+import com.acolak.readingisgood.dto.statistics.OrderStatisticsDTO;
+import com.acolak.readingisgood.dto.statistics.MonthDTO;
+import com.acolak.readingisgood.exception.OrderServiceException;
 import com.acolak.readingisgood.repository.OrderRepository;
-import com.acolak.readingisgood.repository.entity.Order;
+import com.acolak.readingisgood.util.ConvertingUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.DateOperators;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
+import static org.springframework.data.mongodb.core.aggregation.Aggregation.*;
 
 /**
  * @author AhmetColak date 27.10.2021 Copyright © 2021.
@@ -17,28 +25,46 @@ import java.util.Optional;
 public class StaticsService {
 
 	private OrderRepository orderRepository;
+	private MongoTemplate mongoTemplate;
 
-	public StaticsService(OrderRepository orderRepository) {
+	public StaticsService(OrderRepository orderRepository, MongoTemplate mongoTemplate) {
 		this.orderRepository = orderRepository;
+		this.mongoTemplate = mongoTemplate;
 	}
 
-	public List<Order> getCustomerMonthlyOrders(String customerId) {
-		Optional<List<Order>> ordersRecord = orderRepository.findAllByCustomerId(customerId);
+	public List<OrderStatisticsDTO> getCustomerMonthlyOrders(String customerId) {
+		List<OrderStatisticsDTO> orderStats = orderRepository.monthlyStats().getMappedResults();
 
-		if(ordersRecord.isPresent()) {
-			List<Order> orders = ordersRecord.get();
+		List<MonthDTO> orderMonthsDtoList = groupOrderMonths();
 
-			for(Order order : orders) {
-
-			}
-
+		int months = 0;
+		for(OrderStatisticsDTO order : orderStats){
+			int id = orderMonthsDtoList.get(months).getMonth();
+			order.setMonth(ConvertingUtils.convertMonthIdToName(id));
+			months++;
 		}
 
-		return null;
+		if(orderStats.isEmpty()){
+			throw new OrderServiceException(610, "Order Statistics Could not be found");
+		}
+		log.info(orderStats.toString());
+		return orderStats;
 	}
 
-	public Object convertOrdersToResponsDTO(List<Order> ordersByInterval) {
+	public List<MonthDTO> groupOrderMonths(){
 
-		return null;
+		Aggregation agg = newAggregation(
+				project("orderId").and(DateOperators.Month.month("$createDate")).as("month"),
+				group("month").count().as("orderCount"),
+				project("orderCount").and("month").previousOperation());
+
+		AggregationResults<MonthDTO> results = mongoTemplate.aggregate(agg, "orders", MonthDTO.class);
+		List<MonthDTO> orderMonthList = results.getMappedResults();
+
+		log.info(orderMonthList.toString());
+
+		return orderMonthList;
 	}
+
+
 }
