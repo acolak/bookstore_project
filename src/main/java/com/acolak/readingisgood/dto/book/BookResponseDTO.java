@@ -1,6 +1,7 @@
 package com.acolak.readingisgood.dto.book;
 
 import com.acolak.readingisgood.dto.BaseDTO;
+import com.acolak.readingisgood.dto.BaseResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookResponseDTO extends BaseDTO {
+public class BookResponseDTO extends BaseResponseDTO {
 
 	private String name;
 	private String author;

@@ -1,6 +1,7 @@
 package com.acolak.readingisgood.dto.order;
 
 import com.acolak.readingisgood.dto.BaseDTO;
+import com.acolak.readingisgood.dto.BaseResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class OrderResponseDTO extends BaseDTO {
+public class OrderResponseDTO extends BaseResponseDTO {
 
 	private OrderDTO order;
 	private List<OrderDTO> orderList;

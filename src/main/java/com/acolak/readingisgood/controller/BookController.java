@@ -24,13 +24,16 @@ public class BookController {
 	@PostMapping("/add")
 	public ResponseEntity<?> addBook(@RequestBody BookRequestDTO requestDTO) {
 		BookResponseDTO responseDTO = bookService.addNewBook(requestDTO);
+		responseDTO.setResultMessage("New Book Successfully Added!");
 		return ResponseEntity.ok(responseDTO);
 	}
 
 	@PutMapping("/update")
 	public ResponseEntity<?> updateBook(@RequestBody BookRequestDTO requestDTO) {
 		Book book = bookService.updateBookStock(requestDTO);
-		return ResponseEntity.ok(bookService.convertToBookResponseDTO(book));
+		BookResponseDTO responseDTO = bookService.convertToBookResponseDTO(book);
+		responseDTO.setResultMessage("Book Information Updated!");
+		return ResponseEntity.ok(responseDTO);
 	}
 
 }

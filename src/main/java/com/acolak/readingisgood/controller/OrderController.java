@@ -32,6 +32,7 @@ public class OrderController {
 	public ResponseEntity<?> createOrder(@RequestBody @Valid OrderRequestDTO requestDTO){
 		OrderDTO newOrder = orderService.createOrder(requestDTO);
 		OrderResponseDTO responseDTO = new OrderResponseDTO();
+		responseDTO.setResultMessage("New Order Successfully Created!");
 		responseDTO.setOrder(newOrder);
 		return ResponseEntity.ok(responseDTO);
 	}

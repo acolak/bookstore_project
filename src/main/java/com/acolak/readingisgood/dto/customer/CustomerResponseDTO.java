@@ -1,6 +1,7 @@
 package com.acolak.readingisgood.dto.customer;
 
 import com.acolak.readingisgood.dto.BaseDTO;
+import com.acolak.readingisgood.dto.BaseResponseDTO;
 import lombok.*;
 
 /**
@@ -11,7 +12,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerResponseDTO extends BaseDTO {
+public class CustomerResponseDTO extends BaseResponseDTO {
 
 	private String firstName;
 	private String lastName;

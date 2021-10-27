@@ -31,8 +31,9 @@ public class CustomerController {
 	public ResponseEntity<?> registerNewCustomer(@RequestBody CustomerRequestDTO requestDTO) {
 
 		Customer customer = customerService.addCustomer(requestDTO);
-
-		return ResponseEntity.ok(customerService.convertToCustomerResponseDTO(customer));
+		CustomerResponseDTO responseDTO = customerService.convertToCustomerResponseDTO(customer);
+		responseDTO.setResultMessage("New Customer Successfully Registered!");
+		return ResponseEntity.ok(responseDTO);
 
 	}
 
