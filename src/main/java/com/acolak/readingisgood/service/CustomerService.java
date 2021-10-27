@@ -7,6 +7,7 @@ import com.acolak.readingisgood.repository.CustomerRepository;
 import com.acolak.readingisgood.repository.entity.Customer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -37,6 +38,7 @@ public class CustomerService {
 		}
 	}
 
+	@Transactional
 	public Customer getCustomerById(String customerId) {
 
 		Optional<Customer> customerRecord = customerRepository.findById(customerId);

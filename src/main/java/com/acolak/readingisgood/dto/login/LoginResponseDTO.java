@@ -1,5 +1,6 @@
 package com.acolak.readingisgood.dto.login;
 
+import com.acolak.readingisgood.dto.BaseResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -8,7 +9,7 @@ import lombok.Data;
  **/
 @Data
 @AllArgsConstructor
-public class LoginResponseDTO {
+public class LoginResponseDTO extends BaseResponseDTO {
 
 	private String loginToken;
 

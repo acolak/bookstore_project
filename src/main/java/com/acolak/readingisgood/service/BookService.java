@@ -70,6 +70,17 @@ public class BookService {
 		}
 	}
 
+	@Transactional
+	public Book updateBookStockByValue(Book book, Long updatedStockValue) {
+		if(book != null) {
+			book.setStock(updatedStockValue);
+			book.setUpdatedDate(LocalDateTime.now());
+			bookRepository.save(book);
+			log.info("Book stock updated: " + book);
+		}
+		return book;
+	}
+
 	public BookResponseDTO convertToBookResponseDTO(Book book){
 		return BookResponseDTO.builder()
 				.name(book.getName())

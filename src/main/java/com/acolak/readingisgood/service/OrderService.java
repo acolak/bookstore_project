@@ -6,7 +6,6 @@ import com.acolak.readingisgood.dto.order.OrderResponseDTO;
 import com.acolak.readingisgood.exception.OrderServiceException;
 import com.acolak.readingisgood.repository.OrderRepository;
 import com.acolak.readingisgood.repository.entity.Book;
-import com.acolak.readingisgood.repository.entity.Customer;
 import com.acolak.readingisgood.repository.entity.Order;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -63,6 +62,7 @@ public class OrderService {
 
 		Order order = buildOrderEntity(requestDTO, orderedBook);
 		orderRepository.insert(order);
+		bookService.updateBookStockByValue(orderedBook, (orderedBook.getStock() - requestDTO.getAmount()));
 
 		log.info("New Order has completed: " + order);
 

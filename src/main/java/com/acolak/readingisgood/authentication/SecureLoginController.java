@@ -42,8 +42,9 @@ public class SecureLoginController {
 
 		final UserDetails userDetails = userService.loadUserByUsername(requestDTO.getUserName());
 		final String loginToken = jwtUtils.generateToken(userDetails);
-
-		return ResponseEntity.ok(new LoginResponseDTO(loginToken));
+		LoginResponseDTO responseDTO = new LoginResponseDTO(loginToken);
+		responseDTO.setResultMessage("You Have Successfully Logged In, Welcome! You can call other requests now.");
+		return ResponseEntity.ok(responseDTO);
 
 	}
 }
