@@ -52,6 +52,9 @@ https://www.getpostman.com/collections/8915cc28b202a888f0a7
 
 You can download postman collection above link, controllers grouped by domains. 
 You should need to call first **login-authenticate** request to get bearer token.
+```
+User : ahmet - Password: p_ahmet
+```
 
 ##### Note: Bearer Authorization Header automatically added all requests in Postman, So you can call other requests without any action needed. 
 
