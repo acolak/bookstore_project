@@ -1,5 +1,6 @@
 package com.acolak.readingisgood.service;
 
+import com.acolak.readingisgood.dto.order.OrderDTO;
 import com.acolak.readingisgood.dto.order.OrderRequestDTO;
 import com.acolak.readingisgood.dto.order.OrderResponseDTO;
 import com.acolak.readingisgood.exception.OrderServiceException;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author AhmetColak date 26.10.2021 Copyright © 2021.
@@ -51,7 +53,7 @@ public class OrderService {
 	}
 
 	@Transactional
-	public OrderResponseDTO createOrder(OrderRequestDTO requestDTO) {
+	public OrderDTO createOrder(OrderRequestDTO requestDTO) {
 
 		//to check customer is valid!
 		customerService.getCustomerById(requestDTO.getCustomerId());
@@ -64,7 +66,7 @@ public class OrderService {
 
 		log.info("New Order has completed: " + order);
 
-		return convertToCustomerResponseDTO(order);
+		return convertToOrderDTO(order);
 	}
 
 	public void checkBooksStock(Long numberOfBookOrder, Book book) {
@@ -85,8 +87,8 @@ public class OrderService {
 				.build();
 	}
 
-	public OrderResponseDTO convertToCustomerResponseDTO(Order order){
-		return OrderResponseDTO.builder()
+	public OrderDTO convertToOrderDTO(Order order){
+		return OrderDTO.builder()
 				.totalPrice(order.getTotalPrice())
 				.amount(order.getAmount())
 				.bookId(order.getBookId())
@@ -110,7 +112,20 @@ public class OrderService {
 
 	}
 
-	public List<OrderResponseDTO> getOrdersByDateInterval(LocalDateTime startDate, LocalDateTime endDate) {
-		return null;
+	public List<Order> getOrdersByDateInterval(LocalDateTime startDate, LocalDateTime endDate) {
+		Optional<List<Order>> ordersRecord = orderRepository.findAllByCreateDateBetween(startDate, endDate);
+
+		if(ordersRecord.isPresent()){
+			log.info("Orders found in between " + startDate + "-" + endDate + ": " + ordersRecord.get());
+			return ordersRecord.get();
+		} else {
+			throw new OrderServiceException(609, "No orders has found between " + startDate + "-" + endDate + " dates");
+		}
+	}
+
+	public OrderResponseDTO convertOrdersToResponsDTO(List<Order> ordersByInterval) {
+		OrderResponseDTO responseDTO = new OrderResponseDTO();
+		responseDTO.setOrderList(ordersByInterval.stream().map(order -> convertToOrderDTO(order)).collect(Collectors.toList()));
+		return responseDTO;
 	}
 }

@@ -1,6 +1,7 @@
 package com.acolak.readingisgood.controller;
 
 import com.acolak.readingisgood.constant.ControllerConstants;
+import com.acolak.readingisgood.dto.order.OrderDTO;
 import com.acolak.readingisgood.dto.order.OrderRequestDTO;
 import com.acolak.readingisgood.dto.order.OrderResponseDTO;
 import com.acolak.readingisgood.repository.entity.Order;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,25 +30,27 @@ public class OrderController {
 
 	@PostMapping("/create")
 	public ResponseEntity<?> createOrder(@RequestBody @Valid OrderRequestDTO requestDTO){
-		OrderResponseDTO newOrder = orderService.createOrder(requestDTO);
-		return ResponseEntity.ok(newOrder);
+		OrderDTO newOrder = orderService.createOrder(requestDTO);
+		OrderResponseDTO responseDTO = new OrderResponseDTO();
+		responseDTO.setOrder(newOrder);
+		return ResponseEntity.ok(responseDTO);
 	}
 
-	@GetMapping("/orders/{orderId)")
+	@GetMapping("/orders/{orderId}")
 	public ResponseEntity<?> getOrderById(@PathVariable("orderId") String orderId){
 		Order order = orderService.getOrderById(orderId);
-		return ResponseEntity.ok(orderService.convertToCustomerResponseDTO(order));
+		return ResponseEntity.ok(orderService.convertToOrderDTO(order));
 	}
 
 
 	@GetMapping("/list")
-	public ResponseEntity<?> listOrdersByInterval(
-			@PathParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-			@PathParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate
+	public ResponseEntity<?> listOrdersByDateInterval(
+			@RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+			@RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate
 												 ){
-		List<OrderResponseDTO> ordersByInterval = orderService.getOrdersByDateInterval(startDate, endDate);
-		//orderService.groupedOrdersByMonth();
-		return ResponseEntity.ok(ordersByInterval);
+		List<Order> ordersByInterval = orderService.getOrdersByDateInterval(startDate, endDate);
+
+		return ResponseEntity.ok(orderService.convertOrdersToResponsDTO(ordersByInterval));
 
 	}
 

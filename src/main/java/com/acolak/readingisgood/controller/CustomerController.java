@@ -35,7 +35,7 @@ public class CustomerController {
 
 	}
 
-	@GetMapping("/orders/{customerId)")
+	@GetMapping("/orders/{customerId}")
 	public ResponseEntity<?> getAllOrdersByCustomerId(@PathVariable("customerId") String customerId, @RequestParam(defaultValue = "0") Integer pageNo,
 			@RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "createDate") String sortBy) {
 
