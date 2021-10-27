@@ -5,6 +5,8 @@ package com.acolak.readingisgood.constant;
  **/
 public class ControllerConstants {
 
+	public static final String LOGIN_URL = "/login";
+
 	public static final String CUSTOMER_URL = "/customer";
 	public static final String REGISTER_URL = "/register";
 	public static final String GET_ORDERS_URL = "/getorders";

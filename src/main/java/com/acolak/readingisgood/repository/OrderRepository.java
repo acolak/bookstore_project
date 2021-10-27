@@ -18,4 +18,6 @@ public interface OrderRepository extends MongoRepository<Order, String> {
 
 	Optional<List<Order>> findAllByCreateDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 
+	Optional<List<Order>> findAllByCustomerId(String customerId);
+
 }

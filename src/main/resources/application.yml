@@ -7,4 +7,9 @@ spring:
       database: getir-bookstore
       port: 27017
       host: localhost
-      #auto-index-creation: true
+
+
+auth:
+  userName: ahmet
+  userPass: p_ahmet
+  secret: AC2EE1E18A4F6407AEE03C3D697951FAEA3B1A54816462609DD7C79E2083AC3D
