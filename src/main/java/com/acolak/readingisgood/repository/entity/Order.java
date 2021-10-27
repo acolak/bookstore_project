@@ -1,10 +1,10 @@
 package com.acolak.readingisgood.repository.entity;
 
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.LocalDateTime;
 
@@ -14,18 +14,20 @@ import java.time.LocalDateTime;
 
 @Data
 @Document
+@Builder
 public class Order {
 
-	@MongoId
+	@Id
 	private String orderId;
 
 	@Indexed
 	private String customerId;
 	private String bookId;
-	private Integer amount;
+	private Long amount;
 	private Double totalPrice;
 
 	@Indexed
-	LocalDateTime createDate;
+	@Builder.Default
+	LocalDateTime createDate = LocalDateTime.now();
 
 }

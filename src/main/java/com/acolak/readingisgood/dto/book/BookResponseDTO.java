@@ -19,4 +19,5 @@ public class BookResponseDTO extends BaseDTO {
 	private String author;
 	private Double price;
 	private Long stock;
+	private String bookId;
 }

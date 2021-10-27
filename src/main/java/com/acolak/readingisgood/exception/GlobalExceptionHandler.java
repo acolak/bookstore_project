@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 public class GlobalExceptionHandler {
 
-	@ExceptionHandler(BookAlreadyExistException.class)
-	public ResponseEntity<ErrorBody> handleBookAlreadyExistException(BookAlreadyExistException exception) {
+	@ExceptionHandler(BookServiceException.class)
+	public ResponseEntity<ErrorBody> handleBookAlreadyExistException(BookServiceException exception) {
 		HttpStatus responseStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		ErrorBody errorBody = new ErrorBody(exception.getErrorCode(), exception.getErrorMessage());
 		log.error(exception.getErrorCode() + "-" + exception.getErrorMessage());

@@ -5,6 +5,7 @@ import com.acolak.readingisgood.dto.customer.CustomerResponseDTO;
 import com.acolak.readingisgood.exception.CustomerServiceException;
 import com.acolak.readingisgood.repository.CustomerRepository;
 import com.acolak.readingisgood.repository.entity.Customer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,6 +15,7 @@ import java.util.Optional;
  **/
 
 @Service
+@Slf4j
 public class CustomerService {
 
 	private final CustomerRepository customerRepository;
@@ -33,7 +35,19 @@ public class CustomerService {
 			customerRepository.insert(customer);
 			return convertToCustomerResponseDTO(customer);
 		}
+	}
 
+	public Customer getCustomerById(String customerId) {
+
+		Optional<Customer> customerRecord = customerRepository.findById(customerId);
+
+		if(customerRecord.isPresent()) {
+			Customer customer = customerRecord.get();
+			log.info("getCustomerById is Successfully: " + customer);
+			return customer;
+		} else {
+			throw new CustomerServiceException(605, "Customer Not Found!");
+		}
 	}
 
 	public Customer buildCustomerEntity(CustomerRequestDTO requestDTO) {
@@ -53,6 +67,7 @@ public class CustomerService {
 				.email(customer.getEmail())
 				.address(customer.getAddress())
 				.phone(customer.getPhone())
+				.customerId(customer.getCustomerId())
 				.build();
 	}
 

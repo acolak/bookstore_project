@@ -2,7 +2,7 @@ package com.acolak.readingisgood.service;
 
 import com.acolak.readingisgood.dto.book.BookRequestDTO;
 import com.acolak.readingisgood.dto.book.BookResponseDTO;
-import com.acolak.readingisgood.exception.BookAlreadyExistException;
+import com.acolak.readingisgood.exception.BookServiceException;
 import com.acolak.readingisgood.repository.BookRepository;
 import com.acolak.readingisgood.repository.entity.Book;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ public class BookService {
 		Optional<Book> bookRecord = bookRepository.findBookByName(requestDTO.getName());
 
 		if(bookRecord.isPresent()) {
-			throw new BookAlreadyExistException(601, "Book Already Exist!");
+			throw new BookServiceException(601, "Book Already Exist!");
 		} else {
 			Book book = buildBookEntity(requestDTO);
 			bookRepository.insert(book);
@@ -66,7 +66,7 @@ public class BookService {
 			return convertToBookResponseDTO(book);
 
 		} else {
-			throw new BookAlreadyExistException(602, "Book Not Found!");
+			throw new BookServiceException(602, "Book Not Found!");
 		}
 	}
 
@@ -76,7 +76,20 @@ public class BookService {
 				.author(book.getAuthor())
 				.price(book.getPrice())
 				.stock(book.getStock())
+				.bookId(book.getBookId())
 				.build();
 	}
 
+	public Book getBookById(String bookId) {
+
+		Optional<Book> bookRecord = bookRepository.findById(bookId);
+
+		if(bookRecord.isPresent()) {
+			Book book = bookRecord.get();
+			log.info("getBookById is Successfully: " + book);
+			return book;
+		} else {
+			throw new BookServiceException(602, "Book Not Found!");
+		}
+	}
 }

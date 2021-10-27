@@ -18,5 +18,6 @@ public class CustomerResponseDTO extends BaseDTO {
 	private String email;
 	private String phone;
 	private String address;
+	private String customerId;
 
 }

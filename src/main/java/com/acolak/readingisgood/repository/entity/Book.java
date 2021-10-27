@@ -1,10 +1,11 @@
 package com.acolak.readingisgood.repository.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +15,8 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @Document
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book {
 
 	@Id
