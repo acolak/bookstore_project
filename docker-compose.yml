@@ -11,7 +11,7 @@ services:
     networks:
       - getir-test-network
     environment:
-      DATASOURCE_HOST: postgres-db
+      DATASOURCE_HOST: mongo-db
   mongo-db:
     image: mongo:latest
     container_name: mongo-db

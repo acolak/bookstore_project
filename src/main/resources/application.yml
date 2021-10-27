@@ -6,7 +6,7 @@ spring:
       password: p_getir
       database: getir-bookstore
       port: 27017
-      host: localhost
+      host: ${DATASOURCE_HOST:localhost}
 
 
 auth:
