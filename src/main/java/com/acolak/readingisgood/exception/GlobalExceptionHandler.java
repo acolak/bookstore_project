@@ -7,6 +7,7 @@ package com.acolak.readingisgood.exception;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -30,6 +31,14 @@ public class GlobalExceptionHandler {
 		HttpStatus responseStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 		ErrorBody errorBody = new ErrorBody(exception.getErrorCode(), exception.getErrorMessage());
 		log.error(exception.getErrorCode() + "-" + exception.getErrorMessage());
+		return new ResponseEntity<>(errorBody, responseStatus);
+	}
+
+	@ExceptionHandler(BadCredentialsException.class)
+	public ResponseEntity<ErrorBody> handleBadCredentialsException(BadCredentialsException exception) {
+		HttpStatus responseStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+		ErrorBody errorBody = new ErrorBody(401, exception.getMessage());
+		log.error(exception.getMessage());
 		return new ResponseEntity<>(errorBody, responseStatus);
 	}
 

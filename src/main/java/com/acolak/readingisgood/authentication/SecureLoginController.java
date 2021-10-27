@@ -33,11 +33,11 @@ public class SecureLoginController {
 	}
 
 	@PostMapping("/authenticate")
-	public ResponseEntity<?> generateAuthenticationToken(@RequestBody LoginRequestDTO requestDTO) throws Exception {
+	public ResponseEntity<?> generateAuthenticationToken(@RequestBody LoginRequestDTO requestDTO) {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(requestDTO.getUserName(), requestDTO.getPassword()));
 		} catch (BadCredentialsException badCredentialsException) {
-			throw new Exception("Incorrect user name or password");
+			throw new BadCredentialsException("Incorrect user name or password");
 		}
 
 		final UserDetails userDetails = userService.loadUserByUsername(requestDTO.getUserName());
