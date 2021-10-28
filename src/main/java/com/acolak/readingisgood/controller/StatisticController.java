@@ -27,11 +27,12 @@ public class StatisticController {
 	}
 
 	@GetMapping("/customer-monthly-orders/{customerId}")
-	public ResponseEntity<?> listCustomerMonthlyOrders(@PathVariable String customerId){
-		List<OrderStatisticsDTO> orderStatisticsDTOS = statisticsService.getCustomerMonthlyOrders(customerId);
+	public ResponseEntity<?> getCustomerMonthlyOrders(@PathVariable String customerId){
+		List<OrderStatisticsDTO> orderStatisticsDTOS = statisticsService.findMonthlyOrderStats(customerId);
 
 		StatisticsResponseDTO responseDTO = new StatisticsResponseDTO();
 		responseDTO.setOrderStatisticsDTOList(orderStatisticsDTOS);
+		responseDTO.setResultMessage("Monthly Statistics Succesfully Fetched,!");
 		return ResponseEntity.ok(responseDTO);
 	}
 

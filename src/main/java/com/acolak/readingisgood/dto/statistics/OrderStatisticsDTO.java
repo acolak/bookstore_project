@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 public class OrderStatisticsDTO {
 
 	private String month;
-	private int orderCount;
-	private int totalBookCount;
-	private double totalAmount;
+	private long totalOrderCount;
+	private long totalBookCount;
+	private Double totalPurchasedAmount;
 
 }

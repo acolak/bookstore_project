@@ -33,9 +33,9 @@ public class StatisticsControllerTest {
 	public void listCustomerMonthlyOrdersUniTest() {
 
 		List<OrderStatisticsDTO> orderStatisticsDTOList  = new ArrayList<>();
-		lenient().when(statisticsService.getCustomerMonthlyOrders(anyString())).thenReturn(orderStatisticsDTOList);
+		lenient().when(statisticsService.findMonthlyOrderStats(anyString())).thenReturn(orderStatisticsDTOList);
 
-		ResponseEntity responseEntity = statisticController.listCustomerMonthlyOrders("12345");
+		ResponseEntity responseEntity = statisticController.getCustomerMonthlyOrders("12345");
 
 		assertNotNull(responseEntity);
 		assertTrue(responseEntity.getStatusCode().equals(HttpStatus.OK));
