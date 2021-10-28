@@ -2,7 +2,6 @@ package com.acolak.readingisgood.service;
 
 import com.acolak.readingisgood.dto.statistics.OrderStatisticsDTO;
 import com.acolak.readingisgood.exception.OrderServiceException;
-import com.acolak.readingisgood.repository.OrderRepository;
 import com.acolak.readingisgood.repository.entity.Order;
 import com.acolak.readingisgood.util.ConvertingUtils;
 import lombok.extern.slf4j.Slf4j;

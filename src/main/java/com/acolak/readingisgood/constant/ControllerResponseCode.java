@@ -18,6 +18,8 @@ public class ControllerResponseCode {
 
 	public final static ControllerResponseCode CUSTOMER_ALREADY_DEFINED = new ControllerResponseCode("GTR-105", "Customer Already Exist!", HttpStatus.CONFLICT);
 
+	public final static ControllerResponseCode USER_NOT_AUTHENTICATED = new ControllerResponseCode("GTR-401", "User Not Authenticated!", HttpStatus.UNAUTHORIZED);
+	public final static ControllerResponseCode BAD_REQUEST = new ControllerResponseCode("GTR-002", "Paramater Not Suitable!", HttpStatus.BAD_REQUEST);
 
 	@JsonValue
 	private final String code;
