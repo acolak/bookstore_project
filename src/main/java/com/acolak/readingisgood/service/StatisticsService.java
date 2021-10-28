@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.aggregation.DateOperators;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class StatisticsService {
 	public List<OrderStatisticsDTO> findMonthlyOrderStats(String customerId) {
 
 		final Aggregation aggregation = newAggregation(
+				match(Criteria.where("customerId").is(customerId)),
 				project("amount", "totalPrice").and(DateOperators.Month.month("$createDate")).as("month"),
 				group("month").count().as("totalOrderCount").sum("amount").as("totalBookCount").sum("totalPrice").as("totalPurchasedAmount"),
 				project("totalOrderCount", "totalBookCount", "totalPurchasedAmount").and("month").previousOperation(),
